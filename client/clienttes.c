@@ -4,10 +4,15 @@
 #include <netinet/in.h>
 #include <string.h>
 #include <unistd.h>
+#include <pthread.h>
+#include <stdbool.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <arpa/inet.h>
+
 #define PORT 8080
 
-int createSocket(){
+int create_Socket(){
     int socket_netwrk;
     if ((socket_netwrk = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         printf("\n Socket creation error \n");
@@ -18,10 +23,10 @@ int createSocket(){
 
 void sqlCmdCreate(int socket_netwrk){
     char package[300]={0};
-    char command[20]={0};
-    scanf(" %s", command);
+    char cmd[20]={0};
+    scanf(" %s", cmd);
 
-    if(strcmp(command, "DATABASE") == 0){
+    if(strcmp(cmd, "DATABASE") == 0){
         char dbsName[255]={0};
         scanf(" %s", dbsName);
 
@@ -40,7 +45,7 @@ int main(int argc, char const *argv[]) {
     /*SOCKET CONFIGURATION*/
     struct sockaddr_in address;
 
-    int socket_netwrk = createSocket();
+    int socket_netwrk = create_Socket();
     int valread;
 
     struct sockaddr_in serv_addr;
@@ -62,19 +67,18 @@ int main(int argc, char const *argv[]) {
 
     /*SOCKET CONFIGURATION END*/
 
-    char command[20]={0};
+    char cmd[20]={0};
     while(1){
-        command[0] = '\0';
-        scanf(" %s", command);
+        cmd[0] = '\0';
+        scanf(" %s", cmd);
 
-        if(strcmp(command, "CREATE") == 0){
+        if(strcmp(cmd, "CREATE") == 0){
             sqlCmdCreate(socket_netwrk);
             continue;
         }else{
             printf("-----------------------------------------------------\n");
-            printf("command %s is not provided\n", command);
+            printf("command %s is not provided\n", cmd);
             printf("please try this following format: CREATE DATABASE <database_name> \n\n");
-            printf("to make a database\n");
 
         }
 
