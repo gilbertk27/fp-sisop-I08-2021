@@ -79,9 +79,6 @@ int main(int argc, char const *argv[]) {
             count ++;
         }
 
-        printf("done split\n");
-        printf("%s -> %ld \n", inputted[0], strlen(inputted[0]));
-        printf("%s\n", inputted[1]);
 
         int exec_childid = fork();
         failedfork_exit(exec_childid);

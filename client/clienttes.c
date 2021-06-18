@@ -33,8 +33,6 @@ void sqlCmdCreate(int socket_netwrk){
         strcpy(package, "create_db ");
         strcat(package, dbsName);
 
-        /*create_db [nama_db]*/
-
 
         send(socket_netwrk , package , strlen(package) , 0);
     }
@@ -42,7 +40,6 @@ void sqlCmdCreate(int socket_netwrk){
 
 int main(int argc, char const *argv[]) {
 
-    /*SOCKET CONFIGURATION*/
     struct sockaddr_in address;
 
     int socket_netwrk = create_Socket();
@@ -65,7 +62,6 @@ int main(int argc, char const *argv[]) {
         return -1;
     }
 
-    /*SOCKET CONFIGURATION END*/
 
     char cmd[20]={0};
     while(1){
@@ -75,13 +71,7 @@ int main(int argc, char const *argv[]) {
         if(strcmp(cmd, "CREATE") == 0){
             sqlCmdCreate(socket_netwrk);
             continue;
-        }else{
-            printf("-----------------------------------------------------\n");
-            printf("command %s is not provided\n", cmd);
-            printf("please try this following format: CREATE DATABASE <database_name> \n\n");
-
-        }
-
+        }else printf("command %s is not provided\n", cmd);
 
     }
 
